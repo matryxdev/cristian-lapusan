@@ -1388,16 +1388,6 @@
                 height: auto;
             }
             
-            .hero-content-wrapper {
-                min-height: 60vh;
-                padding-top: 100px;
-                padding-bottom: 30px;
-            }
-            
-            .hero-visual {
-                min-height: 40vh;
-            }
-            
             .hero-content {
                 text-align: center;
                 padding: 0 5%;
@@ -1434,6 +1424,11 @@
             /* Header & Navigation */
             header {
                 padding: 10px 15px;
+                height: 70px; /* Fixed height for header */
+            }
+            
+            .logo {
+                font-size: 22px;
             }
             
             .menu-button {
@@ -1472,86 +1467,118 @@
             }
 
             /* Hero Section */
-            .glitch-title {
-                font-size: 36px; /* Bigger on mobile for better visibility */
-                margin-top: 0;
-                margin-bottom: 30px;
-            }
-            
             .hero-content-wrapper {
-                padding-top: 90px; /* More space above content */
-                height: auto;
-                min-height: 60vh;
+                padding-top: 120px; /* Increased to ensure "Salut, je suis un" is visible */
+                min-height: auto;
+                padding-bottom: 30px;
             }
             
             .hero-visual {
-                height: auto;
-                min-height: 40vh;
-            }
-            
-            .hero h3 {
-                font-size: 16px;
-                margin-top: 20px;
+                height: 250px; /* Fixed height for 3D object */
                 margin-bottom: 20px;
             }
             
-            .hero-description {
-                font-size: 16px;
-                margin-bottom: 30px;
+            .hero-content {
+                max-width: 100%;
+                padding: 0 20px;
             }
             
-            /* Make buttons more prominent on mobile */
+            /* Adjust titles */
+            .hero h3 {
+                margin-top: 0;
+                margin-bottom: 15px;
+                padding-left: 0; /* Remove left padding on mobile */
+                text-align: center;
+                display: block; /* Ensure visibility */
+                opacity: 1; /* Make sure it's visible */
+            }
+            
+            .glitch-title {
+                font-size: 32px;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+            
+            .hero-description {
+                font-size: 15px;
+                margin-bottom: 25px;
+                text-align: center;
+            }
+            
+            /* Button adjustments */
             .cta-buttons {
-                display: flex;
-                flex-direction: row; /* Keep buttons side by side */
+                flex-direction: column; /* Stack buttons on mobile */
                 gap: 15px;
-                justify-content: center;
-                margin-bottom: 40px;
+                margin-bottom: 30px;
+                width: 100%;
             }
             
             .cta-button {
                 padding: 12px 20px;
-                width: auto;
+                font-size: 15px;
+                width: 100%; /* Full width buttons on mobile */
+                box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
                 text-align: center;
-                font-size: 14px;
+            }
+            
+            .cta-button.filled {
+                background-color: var(--accent-color);
+                color: var(--primary-color);
+                box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
             }
 
             /* Projects Section */
             .projects-grid {
-                grid-template-columns: 1fr;
-                gap: 25px;
+                grid-template-columns: 1fr; /* Single column on mobile */
+                gap: 20px;
             }
             
             .project-card {
-                max-width: 100%;
-                margin: 0 auto 20px;
+                margin-bottom: 20px;
             }
             
-            .project-filters {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 10px;
-                margin-bottom: 30px;
+            .project-img {
+                height: 180px; /* Smaller image height on mobile */
             }
             
-            .project-filter {
-                padding: 8px 15px;
-                font-size: 12px;
-                margin-bottom: 5px;
+            /* Reduce space between sections */
+            #about, #projects, #contact {
+                padding: 60px 20px;
             }
             
-            .section-title {
-                font-size: 30px;
+            .section-header {
+                margin-bottom: 40px;
             }
-
-            /* Contact Section */
+            
+            /* "View More" button adjustment */
+            .view-more-projects {
+                margin-top: 30px;
+                margin-bottom: 20px;
+            }
+            
+            .view-more-projects .cta-button {
+                width: auto;
+                padding: 10px 25px;
+                margin: 0 auto;
+                display: block;
+                max-width: 200px;
+            }
+            
+            /* Ensure the about image is properly sized */
+            .about-img-container {
+                height: auto;
+                max-height: 300px;
+            }
+            
+            .about-img-container img {
+                height: 100%;
+                object-fit: cover;
+            }
+            
+            /* Contact form adjustments */
             .contact-container {
                 flex-direction: column;
                 gap: 40px;
-            }
-            
-            .contact-info, .contact-form {
-                width: 100%;
             }
             
             .contact-form {
@@ -1568,24 +1595,8 @@
                 padding: 14px;
             }
             
-            /* Section Spacing */
-            #about, #projects, #contact {
-                padding: 80px 20px;
-            }
-            
-            /* Adjust Navbar Logo */
-            .logo {
-                font-size: 24px;
-            }
-            
-            /* Ensure 3D object is visible */
-            .hero-3d-object {
-                height: 100%;
-                width: 100%;
-            }
-            
-            /* Make tech stack more compact */
-            .hero-tech-stack {
+            /* Footer adjustments */
+            .footer-nav {
                 flex-wrap: wrap;
                 justify-content: center;
                 gap: 15px;
@@ -1593,7 +1604,10 @@
         }
         
         @media (max-width: 480px) {
-            /* Smaller screens */
+            .hero-content-wrapper {
+                padding-top: 100px;
+            }
+            
             .glitch-title {
                 font-size: 28px;
             }
@@ -1602,123 +1616,75 @@
                 font-size: 14px;
             }
             
-            .section-title {
-                font-size: 26px;
+            .cta-button {
+                padding: 10px 15px;
+                font-size: 14px;
             }
             
-            .project-img {
-                height: 180px;
+            .hero-visual {
+                height: 200px;
             }
             
-            .project-techs {
-                gap: 6px;
+            /* Tech stack for small screens */
+            .hero-tech-stack {
+                flex-wrap: wrap;
+                gap: 15px;
+                padding: 0 20px;
             }
             
-            .project-tech {
-                font-size: 11px;
-                padding: 3px 8px;
+            .tech-item {
+                font-size: 12px;
             }
             
+            /* Adjust footer for very small screens */
             .footer-logo {
                 font-size: 20px;
             }
             
             .footer-nav {
                 flex-direction: column;
-                gap: 15px;
+                gap: 10px;
             }
             
             .copyright {
                 font-size: 12px;
             }
-            
-            /* Make CTA buttons fullwidth on very small screens */
-            .cta-buttons {
-                flex-direction: column;
-                width: 100%;
-            }
-            
-            .cta-button {
-                width: 100%;
-                text-align: center;
-            }
         }
 
-        /* Animations for mobile */
-        @media (max-width: 768px) {
-            .hero h3, .glitch-title, .hero-description, .cta-buttons {
-                transform: translateY(0) !important;
-                opacity: 0;
-            }
-            
-            @keyframes mobileEntrance {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-            
-            .preloader-complete .hero h3,
-            .preloader-complete .glitch-title,
-            .preloader-complete .hero-description,
-            .preloader-complete .cta-buttons {
-                animation: mobileEntrance 0.8s forwards;
-                animation-delay: var(--delay, 0s);
-            }
-            
-            .preloader-complete .hero h3 { --delay: 0.2s; }
-            .preloader-complete .glitch-title { --delay: 0.4s; }
-            .preloader-complete .hero-description { --delay: 0.6s; }
-            .preloader-complete .cta-buttons { --delay: 0.8s; }
+        /* Visible tag for "Salut, je suis un" */
+        .visible-tag {
+            display: block;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        /* Preloader optimizations */
-        @media (max-width: 768px) {
-            .preloader-content {
-                gap: 20px;
-                transform: scale(0.9);
-            }
-            
-            .loader-text {
-                font-size: 20px;
-            }
-            
-            .loader-bar {
-                width: 180px;
-            }
-            
-            .circle-loader {
-                width: 80px;
-                height: 80px;
-            }
+        /* Mobile-specific button styles */
+        .mobile-primary, .mobile-secondary, .mobile-view-more, .mobile-full-width {
+            display: inline-block;
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
         }
-        
-        /* Ensure the signature image maintains aspect ratio */
-        .about-img-container img {
-            object-fit: contain;
-            max-width: 100%;
-            height: auto;
-            aspect-ratio: 3/2;
+
+        /* Static 3D fallback for devices that can't render Three.js */
+        .static-3d-fallback {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-color-3), var(--accent-color), var(--accent-color-2));
+            opacity: 0.3;
+            filter: blur(20px);
         }
-        
-        /* Make buttons more visible in mobile */
-        @media (max-width: 768px) {
-            .cta-button {
-                padding: 15px 25px;
-                font-size: 16px;
-                font-weight: bold;
-                box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-            }
-            
-            .cta-button.filled {
-                background-color: var(--accent-color);
-                color: var(--primary-color);
-                box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-            }
+
+        /* Make sure preloader completes */
+        .preloader-complete .hero h3,
+        .preloader-complete .glitch-title,
+        .preloader-complete .hero-description,
+        .preloader-complete .cta-buttons {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -1770,12 +1736,12 @@
             <div class="hero-content-wrapper">
                 <div class="hero-decor hero-decor-1"></div>
                 <div class="hero-content">
-                    <h3>Salut, je suis un</h3>
+                    <h3 class="visible-tag">Salut, je suis un</h3>
                     <h1 class="glitch-title" data-text="Développeur Amateur">Développeur Amateur</h1>
                     <p class="hero-description">J'ai 18 ans et je suis passionné par le développement web, principalement en HTML, CSS et JavaScript. Je crée des sites modernes, responsive et esthétiques avec une attention particulière aux détails et à l'expérience utilisateur.</p>
                     <div class="cta-buttons">
-                        <a href="#projects" class="cta-button filled">Mes projets</a>
-                        <a href="#contact" class="cta-button">Me contacter</a>
+                        <a href="#projects" class="cta-button mobile-primary filled">Mes projets</a>
+                        <a href="#contact" class="cta-button mobile-secondary">Me contacter</a>
                     </div>
                 </div>
             </div>
@@ -1964,7 +1930,7 @@
             </div>
             
             <div class="view-more-projects">
-                <a href="#" class="cta-button">Voir plus</a>
+                <a href="#" class="cta-button mobile-view-more">Voir plus</a>
             </div>
         </div>
     </section>
@@ -2061,6 +2027,46 @@
                    (navigator.msMaxTouchPoints > 0);
         }
 
+        // Fonction pour ajuster automatiquement les hauteurs
+        function adjustMobileLayout() {
+            const isMobile = window.innerWidth <= 768;
+            const header = document.querySelector('header');
+            const heroContentWrapper = document.querySelector('.hero-content-wrapper');
+            const heroVisual = document.querySelector('.hero-visual');
+            
+            if (isMobile) {
+                // Ajuster l'espacement entre le header et le contenu
+                if (header && heroContentWrapper) {
+                    const headerHeight = header.offsetHeight;
+                    heroContentWrapper.style.paddingTop = (headerHeight + 50) + 'px';
+                }
+                
+                // Ajuster la hauteur de la section visuelle
+                if (heroVisual) {
+                    if (window.innerHeight < 700) {
+                        // Pour les petits écrans
+                        heroVisual.style.height = '200px';
+                    } else {
+                        // Pour les écrans plus grands
+                        heroVisual.style.height = '250px';
+                    }
+                }
+                
+                // S'assurer que le texte "Salut, je suis un" est visible
+                const introText = document.querySelector('.hero h3');
+                if (introText) {
+                    introText.style.visibility = 'visible';
+                    introText.style.opacity = '1';
+                }
+                
+                // Ajuster les boutons CTA
+                const ctaButtons = document.querySelectorAll('.cta-button');
+                ctaButtons.forEach(button => {
+                    button.classList.add('mobile-style');
+                });
+            }
+        }
+
         // Binary Background
         function generateBinaryBackground() {
             const binaryBg = document.getElementById('binary-bg');
@@ -2079,7 +2085,7 @@
         
         generateBinaryBackground();
         
-        // Preloader with fixed loading
+        // Preloader with fixed loading time
         window.addEventListener('load', function() {
             // Force preloader to complete after a fixed time
             setTimeout(() => {
@@ -2088,133 +2094,182 @@
                     // Animation to fade out preloader
                     gsap.to(preloader, {
                         opacity: 0,
-                        duration: 0.5,
+                        duration: 0.3,
                         onComplete: () => {
                             preloader.style.display = 'none';
                             document.body.classList.add('preloader-complete');
+                            
                             // Initialize page animations
                             initPageAnimations();
+                            
+                            // Apply mobile adjustments after preloader
+                            adjustMobileLayout();
                         }
                     });
                 }
-            }, 1500); // Just 1.5 seconds for better UX
+            }, 1000); // Only 1 second for loading
         });
         
         function initPageAnimations() {
             // Animate hero content
             const heroTimeline = gsap.timeline();
             
-            heroTimeline
-                .to('.hero h3', {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8,
-                    ease: "power3.out"
-                })
-                .to('.glitch-title', {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8,
-                    ease: "power3.out"
-                }, "-=0.4")
-                .to('.hero-description', {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8,
-                    ease: "power3.out"
-                }, "-=0.4")
-                .to('.cta-buttons', {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8,
-                    ease: "power3.out"
-                }, "-=0.4")
-                .to('.hero-tech-stack', {
-                    opacity: 1,
-                    duration: 0.8,
-                    ease: "power3.out"
-                }, "-=0.4");
+            // Only run animations if not on mobile
+            if (!isMobileDevice()) {
+                heroTimeline
+                    .to('.hero h3', {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        ease: "power3.out"
+                    })
+                    .to('.glitch-title', {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        ease: "power3.out"
+                    }, "-=0.4")
+                    .to('.hero-description', {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        ease: "power3.out"
+                    }, "-=0.4")
+                    .to('.cta-buttons', {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        ease: "power3.out"
+                    }, "-=0.4")
+                    .to('.hero-tech-stack', {
+                        opacity: 1,
+                        duration: 0.8,
+                        ease: "power3.out"
+                    }, "-=0.4");
+            } else {
+                // For mobile, make elements visible immediately
+                document.querySelector('.hero h3').style.opacity = '1';
+                document.querySelector('.glitch-title').style.opacity = '1';
+                document.querySelector('.hero-description').style.opacity = '1';
+                document.querySelector('.cta-buttons').style.opacity = '1';
+                document.querySelector('.hero-tech-stack').style.opacity = '1';
+            }
         }
         
         // Hero 3D Object
         let scene, camera, renderer, object, analyser, dataArray, wireframeMaterial;
         
         function initHero3D() {
-            // Create scene
-            scene = new THREE.Scene();
-            
-            // Camera setup
-            const heroContainer = document.getElementById('hero-3d-container');
-            if (!heroContainer) return;
-            
-            const containerWidth = heroContainer.clientWidth;
-            const containerHeight = heroContainer.clientHeight;
-            
-            camera = new THREE.PerspectiveCamera(75, containerWidth / containerHeight, 0.1, 1000);
-            camera.position.z = 10;
-            
-            // Renderer
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(containerWidth, containerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            heroContainer.appendChild(renderer.domElement);
-            
-            // Create lights
-            const ambientLight = new THREE.AmbientLight(0x404040, 2);
-            scene.add(ambientLight);
-            
-            const pointLight1 = new THREE.PointLight(0x00ffff, 2, 50);
-            pointLight1.position.set(5, 5, 5);
-            scene.add(pointLight1);
-            
-            const pointLight2 = new THREE.PointLight(0xff00ff, 2, 50);
-            pointLight2.position.set(-5, -5, 5);
-            scene.add(pointLight2);
-            
-            // Create abstract shape - using octahedron for futuristic look
-            const geometry = new THREE.OctahedronGeometry(5, 1);
-            
-            // Create two materials - solid and wireframe
-            const material = new THREE.MeshPhongMaterial({
-                color: 0x050510,
-                specular: 0x00ffff,
-                shininess: 100,
-                side: THREE.DoubleSide,
-                transparent: true,
-                opacity: 0.8
-            });
-            
-            wireframeMaterial = new THREE.MeshBasicMaterial({
-                color: 0x00ffff,
-                wireframe: true,
-                transparent: true,
-                opacity: 0.5
-            });
-            
-            // Create meshes
-            const solidMesh = new THREE.Mesh(geometry, material);
-            const wireframeMesh = new THREE.Mesh(geometry, wireframeMaterial);
-            
-            // Create group to hold both meshes
-            object = new THREE.Group();
-            object.add(solidMesh);
-            object.add(wireframeMesh);
-            
-            // Add to scene
-            scene.add(object);
-            
-            // Create audio analyser for reactive effects
-            createAudioAnalyser();
-            
-            // Handle window resize
-            window.addEventListener('resize', onHeroResize);
-            
-            // Start animation
-            animateHero();
+            try {
+                // Skip 3D on very small screens to improve performance
+                if (window.innerWidth < 480) {
+                    createFallbackVisual();
+                    return;
+                }
+                
+                // Create scene
+                scene = new THREE.Scene();
+                
+                // Camera setup
+                const heroContainer = document.getElementById('hero-3d-container');
+                if (!heroContainer) {
+                    createFallbackVisual();
+                    return;
+                }
+                
+                const containerWidth = heroContainer.clientWidth;
+                const containerHeight = heroContainer.clientHeight;
+                
+                camera = new THREE.PerspectiveCamera(75, containerWidth / containerHeight, 0.1, 1000);
+                camera.position.z = 10;
+                
+                // Renderer
+                renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                renderer.setSize(containerWidth, containerHeight);
+                renderer.setPixelRatio(window.devicePixelRatio);
+                heroContainer.appendChild(renderer.domElement);
+                
+                // Create lights
+                const ambientLight = new THREE.AmbientLight(0x404040, 2);
+                scene.add(ambientLight);
+                
+                const pointLight1 = new THREE.PointLight(0x00ffff, 2, 50);
+                pointLight1.position.set(5, 5, 5);
+                scene.add(pointLight1);
+                
+                const pointLight2 = new THREE.PointLight(0xff00ff, 2, 50);
+                pointLight2.position.set(-5, -5, 5);
+                scene.add(pointLight2);
+                
+                // Create abstract shape - using octahedron for futuristic look
+                const geometry = new THREE.OctahedronGeometry(5, 1);
+                
+                // Create two materials - solid and wireframe
+                const material = new THREE.MeshPhongMaterial({
+                    color: 0x050510,
+                    specular: 0x00ffff,
+                    shininess: 100,
+                    side: THREE.DoubleSide,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                
+                wireframeMaterial = new THREE.MeshBasicMaterial({
+                    color: 0x00ffff,
+                    wireframe: true,
+                    transparent: true,
+                    opacity: 0.5
+                });
+                
+                // Create meshes
+                const solidMesh = new THREE.Mesh(geometry, material);
+                const wireframeMesh = new THREE.Mesh(geometry, wireframeMaterial);
+                
+                // Create group to hold both meshes
+                object = new THREE.Group();
+                object.add(solidMesh);
+                object.add(wireframeMesh);
+                
+                // Add to scene
+                scene.add(object);
+                
+                // Create audio analyser for reactive effects
+                createAudioAnalyser();
+                
+                // Handle window resize
+                window.addEventListener('resize', onHeroResize);
+                
+                // Start animation
+                animateHero();
+                
+                // Optimize for mobile if needed
+                if (isMobileDevice()) {
+                    optimizeMobile3D();
+                }
+            } catch (error) {
+                console.log("Error initializing 3D: ", error);
+                createFallbackVisual();
+            }
+        }
+        
+        function createFallbackVisual() {
+            const container = document.getElementById('hero-3d-container');
+            if (container) {
+                container.innerHTML = '<div class="static-3d-fallback"></div>';
+            }
+        }
+        
+        function optimizeMobile3D() {
+            if (object && wireframeMaterial) {
+                // Reduce complexity and animation speed on mobile
+                wireframeMaterial.opacity = 0.6;
+                object.rotation.x = 0.003;
+                object.rotation.y = 0.005;
+            }
         }
         
         function createAudioAnalyser() {
-            // This is just for visual effect simulation
+            // Simplified frequency simulation
             analyser = {
                 getFrequencyData: function() {
                     if (!dataArray) {
@@ -2284,7 +2339,14 @@
         }
         
         // Initialize Hero 3D with delay for better page load
-        setTimeout(initHero3D, 100);
+        setTimeout(() => {
+            try {
+                initHero3D();
+            } catch (e) {
+                console.log("3D initialization failed, using fallback");
+                createFallbackVisual();
+            }
+        }, 200);
         
         // Mobile menu
         const menuButton = document.querySelector('.menu-button');
@@ -2331,7 +2393,7 @@
         
         window.addEventListener('scroll', setActiveNavLink);
         
-        // Custom advanced cursor - Désactivé sur mobile
+        // Custom advanced cursor - Disabled on mobile
         const cursor = document.querySelector('.custom-cursor');
         let mouseX = 0;
         let mouseY = 0;
@@ -2339,17 +2401,17 @@
         let cursorY = 0;
         let particleTrailActive = true;
 
-        // Masquer le curseur sur mobile
+        // Hide cursor on mobile
         if (isMobileDevice()) {
-            // Désactiver le curseur personnalisé sur mobile
+            // Disable custom cursor on mobile
             if (cursor) {
                 cursor.style.display = 'none';
             }
             
-            // Désactiver également l'effet de particules
+            // Disable particle effect as well
             particleTrailActive = false;
         } else {
-            // Code du curseur pour desktop seulement
+            // Cursor code for desktop only
             document.addEventListener('mousemove', (e) => {
                 mouseX = e.clientX;
                 mouseY = e.clientY;
@@ -2431,8 +2493,9 @@
                 const targetElement = document.querySelector(targetId);
                 
                 if (targetElement) {
+                    const headerHeight = document.querySelector('header').offsetHeight;
                     window.scrollTo({
-                        top: targetElement.offsetTop - 100,
+                        top: targetElement.offsetTop - headerHeight - 20,
                         behavior: 'smooth'
                     });
                 }
@@ -2570,6 +2633,10 @@
                 delay: Math.random()
             });
         });
+        
+        // Call adjustMobileLayout on load and resize
+        window.addEventListener('load', adjustMobileLayout);
+        window.addEventListener('resize', adjustMobileLayout);
     </script>
 </body>
 </html>
