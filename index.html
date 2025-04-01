@@ -1474,8 +1474,18 @@
             }
             
             .hero-visual {
-                height: 250px; /* Fixed height for 3D object */
+                height: 300px !important; /* Fixed height for 3D object */
+                min-height: 300px !important;
                 margin-bottom: 20px;
+            }
+            
+            /* Ensure 3D object is visible on mobile */
+            #hero-3d-container {
+                height: 300px !important;
+                min-height: 300px !important;
+                width: 100% !important;
+                position: relative !important;
+                display: block !important;
             }
             
             .hero-content {
@@ -1621,10 +1631,6 @@
                 font-size: 14px;
             }
             
-            .hero-visual {
-                height: 200px;
-            }
-            
             /* Tech stack for small screens */
             .hero-tech-stack {
                 flex-wrap: wrap;
@@ -1669,6 +1675,31 @@
             text-transform: uppercase;
         }
 
+        /* Optimizations for 3D object on mobile */
+        @media (max-width: 768px) {
+            .hero-visual {
+                height: 300px !important;
+                min-height: 300px !important;
+                margin-bottom: 30px !important;
+            }
+            
+            #hero-3d-container {
+                height: 300px !important;
+                min-height: 300px !important;
+                width: 100% !important;
+                position: relative !important;
+                display: block !important;
+            }
+            
+            #hero-3d-container canvas {
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+            }
+        }
+
         /* Static 3D fallback for devices that can't render Three.js */
         .static-3d-fallback {
             width: 100%;
@@ -1685,6 +1716,62 @@
         .preloader-complete .cta-buttons {
             opacity: 1;
             transform: translateY(0);
+        }
+        
+        /* Enhanced 3D fallback styles */
+        .enhanced-3d-fallback {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 800px;
+            position: relative;
+        }
+        
+        .fallback-octahedron {
+            width: 180px;
+            height: 180px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate3d 8s infinite linear;
+        }
+        
+        .octahedron-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.2), rgba(123, 0, 255, 0.2));
+            border: 1px solid rgba(0, 255, 255, 0.5);
+            transform-origin: center;
+        }
+        
+        .octahedron-face:nth-child(1) { transform: rotateX(0deg) translateZ(90px); }
+        .octahedron-face:nth-child(2) { transform: rotateX(180deg) translateZ(90px); }
+        .octahedron-face:nth-child(3) { transform: rotateY(90deg) translateZ(90px); }
+        .octahedron-face:nth-child(4) { transform: rotateY(-90deg) translateZ(90px); }
+        .octahedron-face:nth-child(5) { transform: rotateX(90deg) translateZ(90px); }
+        .octahedron-face:nth-child(6) { transform: rotateX(-90deg) translateZ(90px); }
+        .octahedron-face:nth-child(7) { transform: rotateY(45deg) translateZ(127px); }
+        .octahedron-face:nth-child(8) { transform: rotateY(-45deg) translateZ(127px); }
+        
+        @keyframes rotate3d {
+            0% { transform: rotateX(0) rotateY(0); }
+            100% { transform: rotateX(360deg) rotateY(360deg); }
+        }
+        
+        /* iOS-specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            .hero-visual {
+                height: 300px !important;
+                min-height: 300px !important;
+                margin-bottom: 50px !important;
+            }
+            
+            #hero-3d-container {
+                height: 300px !important;
+                min-height: 300px !important;
+            }
         }
     </style>
 </head>
@@ -1914,7 +2001,7 @@
                             <p class="project-category">Site Web 3D</p>
                             <p class="project-year">2021</p>
                         </div>
-                        <h3 class="project-title">Matryx Pulse/h3>
+                        <h3 class="project-title">Matryx Pulse</h3>
                         <p class="project-desc">Vivez l'une de mes premières création 3D avec Matryx Pulse</p>
                         <div class="project-techs">
                             <span class="project-tech">HTML</span>
@@ -1928,7 +2015,6 @@
                             <a href="https://matryx-pulse.vercel.app" target="_blank" class="project-link"><i class="fas fa-link"></i> Visiter</a>
                         </div>
                     </div>
-                </div>
                 <div class="project-card" data-category="python">
                     <div class="project-img">
                         <img src="images/soon.png" alt="Python Projects Coming Soon">
@@ -2049,45 +2135,10 @@
                    (navigator.maxTouchPoints > 0) || 
                    (navigator.msMaxTouchPoints > 0);
         }
-
-        // Fonction pour ajuster automatiquement les hauteurs
-        function adjustMobileLayout() {
-            const isMobile = window.innerWidth <= 768;
-            const header = document.querySelector('header');
-            const heroContentWrapper = document.querySelector('.hero-content-wrapper');
-            const heroVisual = document.querySelector('.hero-visual');
-            
-            if (isMobile) {
-                // Ajuster l'espacement entre le header et le contenu
-                if (header && heroContentWrapper) {
-                    const headerHeight = header.offsetHeight;
-                    heroContentWrapper.style.paddingTop = (headerHeight + 50) + 'px';
-                }
-                
-                // Ajuster la hauteur de la section visuelle
-                if (heroVisual) {
-                    if (window.innerHeight < 700) {
-                        // Pour les petits écrans
-                        heroVisual.style.height = '200px';
-                    } else {
-                        // Pour les écrans plus grands
-                        heroVisual.style.height = '250px';
-                    }
-                }
-                
-                // S'assurer que le texte "Salut, je suis un" est visible
-                const introText = document.querySelector('.hero h3');
-                if (introText) {
-                    introText.style.visibility = 'visible';
-                    introText.style.opacity = '1';
-                }
-                
-                // Ajuster les boutons CTA
-                const ctaButtons = document.querySelectorAll('.cta-button');
-                ctaButtons.forEach(button => {
-                    button.classList.add('mobile-style');
-                });
-            }
+        
+        // Fonction pour détecter iOS
+        function isIOS() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         }
 
         // Binary Background
@@ -2125,8 +2176,8 @@
                             // Initialize page animations
                             initPageAnimations();
                             
-                            // Apply mobile adjustments after preloader
-                            adjustMobileLayout();
+                            // Re-initialize 3D after preloader completes
+                            setTimeout(initHero3D, 100);
                         }
                     });
                 }
@@ -2179,60 +2230,55 @@
             }
         }
         
-        // Hero 3D Object
+        // Hero 3D Object - Optimized for mobile
         let scene, camera, renderer, object, analyser, dataArray, wireframeMaterial;
         
         function initHero3D() {
             try {
-                // Skip 3D on very small screens to improve performance
-                if (window.innerWidth < 480) {
-                    createFallbackVisual();
-                    return;
-                }
-                
                 // Create scene
                 scene = new THREE.Scene();
                 
                 // Camera setup
                 const heroContainer = document.getElementById('hero-3d-container');
-                if (!heroContainer) {
-                    createFallbackVisual();
-                    return;
-                }
+                if (!heroContainer) return;
+                
+                // Force container to have visible dimensions on mobile
+                heroContainer.style.height = '300px';
+                heroContainer.style.minHeight = '300px';
+                heroContainer.style.width = '100%';
+                heroContainer.style.overflow = 'visible';
                 
                 const containerWidth = heroContainer.clientWidth;
-                const containerHeight = heroContainer.clientHeight;
+                const containerHeight = 300; // Force fixed height
                 
                 camera = new THREE.PerspectiveCamera(75, containerWidth / containerHeight, 0.1, 1000);
                 camera.position.z = 10;
                 
-                // Renderer
-                renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+                // Renderer with mobile optimizations
+                renderer = new THREE.WebGLRenderer({ 
+                    antialias: false, // Disable for better performance
+                    alpha: true,
+                    powerPreference: "default"
+                });
                 renderer.setSize(containerWidth, containerHeight);
-                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setPixelRatio(1); // Lower pixel ratio for better performance
                 heroContainer.appendChild(renderer.domElement);
                 
-                // Create lights
-                const ambientLight = new THREE.AmbientLight(0x404040, 2);
+                // Simple lighting for better mobile performance
+                const ambientLight = new THREE.AmbientLight(0xffffff, 2);
                 scene.add(ambientLight);
                 
-                const pointLight1 = new THREE.PointLight(0x00ffff, 2, 50);
-                pointLight1.position.set(5, 5, 5);
-                scene.add(pointLight1);
+                // Only one point light for mobile
+                const pointLight = new THREE.PointLight(0x00ffff, 3, 50);
+                pointLight.position.set(0, 0, 10);
+                scene.add(pointLight);
                 
-                const pointLight2 = new THREE.PointLight(0xff00ff, 2, 50);
-                pointLight2.position.set(-5, -5, 5);
-                scene.add(pointLight2);
+                // Simpler geometry for mobile
+                const geometry = new THREE.OctahedronGeometry(5, 0);
                 
-                // Create abstract shape - using octahedron for futuristic look
-                const geometry = new THREE.OctahedronGeometry(5, 1);
-                
-                // Create two materials - solid and wireframe
-                const material = new THREE.MeshPhongMaterial({
+                // Use simpler materials for mobile
+                const material = new THREE.MeshBasicMaterial({
                     color: 0x050510,
-                    specular: 0x00ffff,
-                    shininess: 100,
-                    side: THREE.DoubleSide,
                     transparent: true,
                     opacity: 0.8
                 });
@@ -2241,23 +2287,19 @@
                     color: 0x00ffff,
                     wireframe: true,
                     transparent: true,
-                    opacity: 0.5
+                    opacity: 0.8 // Higher opacity for better visibility
                 });
                 
-                // Create meshes
                 const solidMesh = new THREE.Mesh(geometry, material);
                 const wireframeMesh = new THREE.Mesh(geometry, wireframeMaterial);
                 
-                // Create group to hold both meshes
+                // Create object and make it larger for better visibility
                 object = new THREE.Group();
                 object.add(solidMesh);
                 object.add(wireframeMesh);
+                object.scale.set(1.5, 1.5, 1.5); // Make object larger
                 
-                // Add to scene
                 scene.add(object);
-                
-                // Create audio analyser for reactive effects
-                createAudioAnalyser();
                 
                 // Handle window resize
                 window.addEventListener('resize', onHeroResize);
@@ -2265,53 +2307,30 @@
                 // Start animation
                 animateHero();
                 
-                // Optimize for mobile if needed
-                if (isMobileDevice()) {
-                    optimizeMobile3D();
-                }
             } catch (error) {
-                console.log("Error initializing 3D: ", error);
-                createFallbackVisual();
+                console.log("Error initializing 3D", error);
+                createFallback();
             }
         }
         
-        function createFallbackVisual() {
+        function createFallback() {
             const container = document.getElementById('hero-3d-container');
             if (container) {
-                container.innerHTML = '<div class="static-3d-fallback"></div>';
+                container.innerHTML = `
+                    <div class="enhanced-3d-fallback">
+                        <div class="fallback-octahedron">
+                            <div class="octahedron-face"></div>
+                            <div class="octahedron-face"></div>
+                            <div class="octahedron-face"></div>
+                            <div class="octahedron-face"></div>
+                            <div class="octahedron-face"></div>
+                            <div class="octahedron-face"></div>
+                            <div class="octahedron-face"></div>
+                            <div class="octahedron-face"></div>
+                        </div>
+                    </div>
+                `;
             }
-        }
-        
-        function optimizeMobile3D() {
-            if (object && wireframeMaterial) {
-                // Reduce complexity and animation speed on mobile
-                wireframeMaterial.opacity = 0.6;
-                object.rotation.x = 0.003;
-                object.rotation.y = 0.005;
-            }
-        }
-        
-        function createAudioAnalyser() {
-            // Simplified frequency simulation
-            analyser = {
-                getFrequencyData: function() {
-                    if (!dataArray) {
-                        dataArray = new Uint8Array(128);
-                    }
-                    
-                    // Create a simulated frequency pattern
-                    const time = Date.now() * 0.001;
-                    for (let i = 0; i < dataArray.length; i++) {
-                        const value = (
-                            Math.sin(time + i * 0.1) * 0.5 + 0.5 + 
-                            Math.sin(time * 0.5 + i * 0.05) * 0.25
-                        ) * 255;
-                        dataArray[i] = value;
-                    }
-                    
-                    return dataArray;
-                }
-            };
         }
         
         function onHeroResize() {
@@ -2321,7 +2340,7 @@
             if (!heroContainer) return;
             
             const containerWidth = heroContainer.clientWidth;
-            const containerHeight = heroContainer.clientHeight;
+            const containerHeight = heroContainer.clientHeight || 300;
             
             camera.aspect = containerWidth / containerHeight;
             camera.updateProjectionMatrix();
@@ -2329,47 +2348,21 @@
         }
         
         function animateHero() {
-            if (!object || !renderer || !scene || !camera) return;
-            
             requestAnimationFrame(animateHero);
             
-            // Rotate object
-            object.rotation.x += 0.005;
-            object.rotation.y += 0.01;
-            
-            // Get frequency data for animation
-            const frequencyData = analyser.getFrequencyData();
-            const averageFrequency = getAverageFrequency(frequencyData);
-            
-            // Scale based on frequency
-            const scaleFactor = 1 + averageFrequency * 0.001;
-            object.scale.set(scaleFactor, scaleFactor, scaleFactor);
-            
-            // Adjust wireframe opacity based on frequency
-            if (wireframeMaterial) {
-                wireframeMaterial.opacity = 0.3 + averageFrequency * 0.001;
+            if (object) {
+                // Slower rotation for better visibility
+                object.rotation.x += 0.01;
+                object.rotation.y += 0.01;
             }
             
-            renderer.render(scene, camera);
-        }
-        
-        function getAverageFrequency(frequencyData) {
-            let sum = 0;
-            for (let i = 0; i < frequencyData.length; i++) {
-                sum += frequencyData[i];
+            if (renderer && scene && camera) {
+                renderer.render(scene, camera);
             }
-            return sum / frequencyData.length;
         }
         
         // Initialize Hero 3D with delay for better page load
-        setTimeout(() => {
-            try {
-                initHero3D();
-            } catch (e) {
-                console.log("3D initialization failed, using fallback");
-                createFallbackVisual();
-            }
-        }, 200);
+        setTimeout(initHero3D, 100);
         
         // Mobile menu
         const menuButton = document.querySelector('.menu-button');
@@ -2657,9 +2650,41 @@
             });
         });
         
-        // Call adjustMobileLayout on load and resize
+        // Function to adjust mobile layout
+        function adjustMobileLayout() {
+            if (isMobileDevice()) {
+                // Ensure 3D container is visible
+                const heroVisual = document.querySelector('.hero-visual');
+                const hero3dContainer = document.getElementById('hero-3d-container');
+                
+                if (heroVisual) {
+                    heroVisual.style.height = '300px';
+                    heroVisual.style.minHeight = '300px';
+                }
+                
+                if (hero3dContainer) {
+                    hero3dContainer.style.height = '300px';
+                    hero3dContainer.style.minHeight = '300px';
+                    hero3dContainer.style.width = '100%';
+                    hero3dContainer.style.position = 'relative';
+                    hero3dContainer.style.display = 'block';
+                    
+                    // Try reinitializing 3D for iOS
+                    if (isIOS()) {
+                        setTimeout(initHero3D, 500);
+                    }
+                }
+            }
+        }
+        
+        // Call adjustMobileLayout on load and on resize
         window.addEventListener('load', adjustMobileLayout);
         window.addEventListener('resize', adjustMobileLayout);
+        
+        // Make another attempt to init 3D object on iOS
+        if (isIOS()) {
+            setTimeout(initHero3D, 1500);
+        }
     </script>
 </body>
 </html>
