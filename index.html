@@ -1385,7 +1385,17 @@
             
             .hero-content-wrapper, .hero-visual {
                 width: 100%;
-                height: 50vh;
+                height: auto;
+            }
+            
+            .hero-content-wrapper {
+                min-height: 60vh;
+                padding-top: 100px;
+                padding-bottom: 30px;
+            }
+            
+            .hero-visual {
+                min-height: 40vh;
             }
             
             .hero-content {
@@ -1463,32 +1473,47 @@
 
             /* Hero Section */
             .glitch-title {
-                font-size: 32px;
-                margin-top: 10px;
+                font-size: 36px; /* Bigger on mobile for better visibility */
+                margin-top: 0;
+                margin-bottom: 30px;
             }
             
-            .hero-content-wrapper, .hero-visual {
+            .hero-content-wrapper {
+                padding-top: 90px; /* More space above content */
                 height: auto;
-                min-height: 50vh;
-                padding-top: 80px;
+                min-height: 60vh;
+            }
+            
+            .hero-visual {
+                height: auto;
+                min-height: 40vh;
             }
             
             .hero h3 {
                 font-size: 16px;
                 margin-top: 20px;
+                margin-bottom: 20px;
             }
             
             .hero-description {
                 font-size: 16px;
+                margin-bottom: 30px;
             }
             
-            .hero-typed-text {
-                font-size: 18px;
-            }
-            
+            /* Make buttons more prominent on mobile */
             .cta-buttons {
-                flex-direction: column;
+                display: flex;
+                flex-direction: row; /* Keep buttons side by side */
                 gap: 15px;
+                justify-content: center;
+                margin-bottom: 40px;
+            }
+            
+            .cta-button {
+                padding: 12px 20px;
+                width: auto;
+                text-align: center;
+                font-size: 14px;
             }
 
             /* Projects Section */
@@ -1547,6 +1572,24 @@
             #about, #projects, #contact {
                 padding: 80px 20px;
             }
+            
+            /* Adjust Navbar Logo */
+            .logo {
+                font-size: 24px;
+            }
+            
+            /* Ensure 3D object is visible */
+            .hero-3d-object {
+                height: 100%;
+                width: 100%;
+            }
+            
+            /* Make tech stack more compact */
+            .hero-tech-stack {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -1587,6 +1630,17 @@
             
             .copyright {
                 font-size: 12px;
+            }
+            
+            /* Make CTA buttons fullwidth on very small screens */
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .cta-button {
+                width: 100%;
+                text-align: center;
             }
         }
 
@@ -1640,6 +1694,30 @@
             .circle-loader {
                 width: 80px;
                 height: 80px;
+            }
+        }
+        
+        /* Ensure the signature image maintains aspect ratio */
+        .about-img-container img {
+            object-fit: contain;
+            max-width: 100%;
+            height: auto;
+            aspect-ratio: 3/2;
+        }
+        
+        /* Make buttons more visible in mobile */
+        @media (max-width: 768px) {
+            .cta-button {
+                padding: 15px 25px;
+                font-size: 16px;
+                font-weight: bold;
+                box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+            }
+            
+            .cta-button.filled {
+                background-color: var(--accent-color);
+                color: var(--primary-color);
+                box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
             }
         }
     </style>
@@ -2003,14 +2081,14 @@
         
         // Preloader with fixed loading
         window.addEventListener('load', function() {
-            // Force preloader to complete after a maximum time (safety measure)
+            // Force preloader to complete after a fixed time
             setTimeout(() => {
                 const preloader = document.querySelector('.preloader');
-                if (preloader && preloader.style.display !== 'none') {
+                if (preloader) {
                     // Animation to fade out preloader
                     gsap.to(preloader, {
                         opacity: 0,
-                        duration: 1,
+                        duration: 0.5,
                         onComplete: () => {
                             preloader.style.display = 'none';
                             document.body.classList.add('preloader-complete');
@@ -2019,34 +2097,7 @@
                         }
                     });
                 }
-            }, 2500); // Maximum loading time of 2.5 seconds
-            
-            // Original loading simulation (modified to be more reliable)
-            let progress = 0;
-            const loadingInterval = setInterval(() => {
-                progress += Math.random() * 10;
-                
-                if (progress >= 100) {
-                    clearInterval(loadingInterval);
-                    progress = 100;
-                    
-                    setTimeout(() => {
-                        const preloader = document.querySelector('.preloader');
-                        if (preloader && preloader.style.display !== 'none') {
-                            gsap.to(preloader, {
-                                opacity: 0,
-                                duration: 1,
-                                onComplete: () => {
-                                    preloader.style.display = 'none';
-                                    document.body.classList.add('preloader-complete');
-                                    // Initialize page animations
-                                    initPageAnimations();
-                                }
-                            });
-                        }
-                    }, 500);
-                }
-            }, 150);
+            }, 1500); // Just 1.5 seconds for better UX
         });
         
         function initPageAnimations() {
@@ -2089,9 +2140,6 @@
         let scene, camera, renderer, object, analyser, dataArray, wireframeMaterial;
         
         function initHero3D() {
-            // Skip 3D on very small screens to improve performance
-            if (window.innerWidth < 480) return;
-            
             // Create scene
             scene = new THREE.Scene();
             
@@ -2167,7 +2215,6 @@
         
         function createAudioAnalyser() {
             // This is just for visual effect simulation
-            // In a real implementation, you would connect this to audio
             analyser = {
                 getFrequencyData: function() {
                     if (!dataArray) {
