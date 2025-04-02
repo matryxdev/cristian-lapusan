@@ -561,6 +561,7 @@
         
         .about-img-container {
             width: 100%;
+            max-width: 400px;
             height: 400px;
             border-radius: 10px;
             overflow: hidden;
@@ -568,6 +569,7 @@
             box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
             transform: perspective(1000px) rotateY(-15deg);
             transition: 0.5s;
+            margin: 0 auto;
         }
         
         .about-img-container:hover {
@@ -1126,7 +1128,15 @@
             }
             
             .about-img-container {
-                height: 250px;
+                height: 220px;
+                max-width: 300px;
+                transform: perspective(1000px) rotateY(0deg);
+            }
+            
+            .about-image {
+                width: 100%;
+                display: flex;
+                justify-content: center;
             }
             
             .project-filters {
@@ -1350,7 +1360,7 @@
                     <div class="project-content">
                         <div class="project-meta">
                             <p class="project-category">Site E-Commerce</p>
-                            <p class="project-year">2025</p>
+                            <p class="project-year">2024</p>
                         </div>
                         <h3 class="project-title">Modaiya Store</h3>
                         <p class="project-desc">Une boutique en ligne de montres avec une interface élégante et intuitive, intégrant un système de paiement sécurisé.</p>
