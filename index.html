@@ -622,6 +622,8 @@
             gap: 20px;
             margin-bottom: 50px;
             flex-wrap: wrap;
+            position: relative;
+            z-index: 5;
         }
         
         .project-filter {
@@ -634,6 +636,8 @@
             transition: 0.3s;
             text-transform: uppercase;
             letter-spacing: 1px;
+            position: relative;
+            z-index: 5;
         }
         
         .project-filter.active, .project-filter:hover {
@@ -1184,6 +1188,11 @@
                 font-size: 15px;
             }
             
+            .about-img-container {
+                height: 180px;
+                max-width: 250px;
+            }
+            
             .project-img {
                 height: 180px;
             }
@@ -1207,6 +1216,26 @@
             
             .copyright {
                 font-size: 12px;
+            }
+        }
+        
+        /* Ajout d'une media query pour les très petits écrans */
+        @media (max-width: 360px) {
+            .about-img-container {
+                height: 160px;
+                max-width: 220px;
+            }
+            
+            .project-img {
+                height: 150px;
+            }
+            
+            .project-title {
+                font-size: 18px;
+            }
+            
+            .hero-tech-stack {
+                gap: 10px;
             }
         }
     </style>
@@ -1347,9 +1376,9 @@
         
         <div class="projects-showcase">
             <div class="project-filters">
-                <button class="project-filter active" data-filter="all">Tout</button>
-                <button class="project-filter" data-filter="web">Sites web</button>
-                <button class="project-filter" data-filter="python">Python</button>
+                <button class="project-filter active" data-filter="all" onclick="filterProjects('all')">Tout</button>
+                <button class="project-filter" data-filter="web" onclick="filterProjects('web')">Sites web</button>
+                <button class="project-filter" data-filter="python" onclick="filterProjects('python')">Python</button>
             </div>
             
             <div class="projects-grid">
@@ -1466,10 +1495,6 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="view-more-projects">
-                <a href="#" class="cta-button">Voir plus</a>
-            </div>
         </div>
     </section>
     
@@ -1552,7 +1577,6 @@
         </div>
     </footer>
     
-    <!-- Scripts -->
     <script>
         // Preloader
         window.addEventListener('load', function() {
@@ -1567,6 +1591,36 @@
                 }
             }, 800);
         });
+        
+        // Fonction globale pour filtrer les projets
+        function filterProjects(filterValue) {
+            // Mettre à jour la classe active sur les boutons
+            const buttons = document.querySelectorAll('.project-filter');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-filter') === filterValue) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Filtrer les projets
+            const projects = document.querySelectorAll('.project-card');
+            projects.forEach(card => {
+                const category = card.getAttribute('data-category');
+                
+                if (filterValue === 'all' || category.includes(filterValue)) {
+                    card.style.display = 'block';
+                    setTimeout(() => {
+                        card.classList.add('visible');
+                    }, 50);
+                } else {
+                    card.classList.remove('visible');
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
         
         // Mobile menu
         const menuButton = document.querySelector('.menu-button');
@@ -1599,53 +1653,10 @@
                 }, 300);
             });
             
-            // Reveal project cards on scroll
-            const revealProjects = () => {
-                const cards = document.querySelectorAll('.project-card');
-                cards.forEach((card, index) => {
-                    const cardTop = card.getBoundingClientRect().top;
-                    const triggerBottom = window.innerHeight * 0.8;
-                    
-                    if (cardTop < triggerBottom) {
-                        setTimeout(() => {
-                            card.classList.add('visible');
-                        }, index * 100);
-                    }
-                });
-            };
-            
-            window.addEventListener('scroll', revealProjects);
-            revealProjects(); // Initial check
-            
-            // Project filtering
-            const projectFilters = document.querySelectorAll('.project-filter');
-            const projectCards = document.querySelectorAll('.project-card');
-            
-            projectFilters.forEach(filter => {
-                filter.addEventListener('click', () => {
-                    // Update active filter
-                    projectFilters.forEach(f => f.classList.remove('active'));
-                    filter.classList.add('active');
-                    
-                    const filterValue = filter.getAttribute('data-filter');
-                    
-                    // Filter projects
-                    projectCards.forEach(card => {
-                        const cardCategory = card.getAttribute('data-category');
-                        
-                        if (filterValue === 'all' || cardCategory.includes(filterValue)) {
-                            card.style.display = 'block';
-                            setTimeout(() => {
-                                card.classList.add('visible');
-                            }, 100);
-                        } else {
-                            card.classList.remove('visible');
-                            setTimeout(() => {
-                                card.style.display = 'none';
-                            }, 300);
-                        }
-                    });
-                });
+            // Make all project cards visible initially
+            const allCards = document.querySelectorAll('.project-card');
+            allCards.forEach(card => {
+                card.classList.add('visible');
             });
             
             // Active nav link on scroll
@@ -1702,7 +1713,7 @@
                     submitBtn.textContent = 'Envoi en cours...';
                     submitBtn.disabled = true;
                     
-                    // Simulate form submission (replace with actual form handling)
+                    // Simulate form submission
                     setTimeout(() => {
                         submitBtn.textContent = 'Message envoyé !';
                         this.reset();
