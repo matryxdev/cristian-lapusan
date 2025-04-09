@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/logo.ico" type="image/x-icon">
+    <title>Annonces | Cristian Lapusan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #050510;
+            --secondary-color: #0d0d1a;
+            --accent-color: #00ffff;
+            --accent-color-2: #ff00ff;
+            --accent-color-3: #7b00ff;
+            --text-color: #ffffff;
+            --text-secondary: #a0a0a0;
+            --neon-shadow: 0 0 10px rgba(0, 255, 255, 0.7), 0 0 20px rgba(0, 255, 255, 0.5), 0 0 30px rgba(0, 255, 255, 0.3);
+            --neon-shadow-pink: 0 0 10px rgba(255, 0, 255, 0.7), 0 0 20px rgba(255, 0, 255, 0.5), 0 0 30px rgba(255, 0, 255, 0.3);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            background-color: rgba(5, 5, 16, 0.5);
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.7), rgba(123, 0, 255, 0.7));
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.9), rgba(255, 0, 255, 0.9));
+        }
+
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-color) var(--primary-color);
+        }
+        
+        body {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+        
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .loader-progress {
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color-3), var(--accent-color), var(--accent-color-2));
+            background-size: 200% 100%;
+            animation: gradientMove 2s linear infinite;
+            box-shadow: var(--neon-shadow);
+        }
+        
+        @keyframes gradientMove {
+            0% { background-position: 0% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(15px);
+            background-color: rgba(5, 5, 16, 0.5);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-color);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+            text-shadow: var(--neon-shadow);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 40px;
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            position: relative;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 5px 0;
+        }
+        
+        nav ul li a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -10px;
+            width: 4px;
+            height: 100%;
+            background-color: var(--accent-color);
+            transform: scaleY(0);
+            transition: transform 0.3s, left 0.3s, opacity 0.3s;
+            transform-origin: bottom;
+            opacity: 0;
+        }
+        
+        nav ul li a:hover::before, nav ul li a.active::before {
+            transform: scaleY(1);
+            left: -5px;
+            opacity: 1;
+            box-shadow: var(--neon-shadow);
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            color: var(--accent-color);
+            text-shadow: var(--neon-shadow);
+        }
+        
+        .menu-button {
+            display: none;
+            position: relative;
+            width: 30px;
+            height: 25px;
+            cursor: pointer;
+            z-index: 102;
+        }
+        
+        .menu-button span {
+            display: block;
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            background: var(--text-color);
+            border-radius: 2px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .menu-button span:nth-child(1) { top: 0px; }
+        .menu-button span:nth-child(2), .menu-button span:nth-child(3) { top: 10px; }
+        .menu-button span:nth-child(4) { top: 20px; }
+        
+        .menu-button.active span:nth-child(1), .menu-button.active span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .menu-button.active span:nth-child(2) {
+            transform: rotate(45deg);
+            background: var(--accent-color);
+        }
+        
+        .menu-button.active span:nth-child(3) {
+            transform: rotate(-45deg);
+            background: var(--accent-color);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--primary-color);
+        }
+        
+        .hero-grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            opacity: 0.8;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            z-index: 1;
+            position: relative;
+            padding: 0 20px;
+        }
+        
+        .hero h3 {
+            font-size: 18px;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .glitch-title {
+            position: relative;
+            font-size: 60px;
+            font-weight: 800;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            line-height: 1.1;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .glitch-title > span {
+            color: var(--accent-color-2);
+        }
+        
+        .hero-description {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: transparent;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 1px solid var(--accent-color);
+            z-index: 1;
+        }
+        
+        .cta-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-color);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.5s;
+        }
+        
+        .cta-button:hover:before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        .cta-button:hover {
+            color: var(--primary-color);
+            box-shadow: var(--neon-shadow);
+        }
+        
+        .cta-button:hover::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background: transparent;
+            color: var(--accent-color-2);
+            z-index: -1;
+            animation: glitch-btn 0.3s cubic-bezier(.25, .46, .45, .94) both;
+        }
+        
+        @keyframes glitch-btn {
+            0%, 100% { transform: translate(0); }
+            25% { transform: translate(-1px, 1px); }
+            50% { transform: translate(1px, -1px); }
+            75% { transform: translate(-1px, -1px); }
+        }
+        
+        .cta-button.filled {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+        
+        .hero-decor {
+            position: absolute;
+            background: linear-gradient(45deg, var(--accent-color-3), var(--accent-color));
+            filter: blur(60px);
+            opacity: 0.15;
+            z-index: 0;
+        }
+        
+        .hero-decor-1 {
+            top: 20%;
+            left: -10%;
+            width: 40%;
+            height: 60%;
+            transform: rotate(-45deg);
+        }
+        
+        .hero-decor-2 {
+            bottom: 10%;
+            right: -20%;
+            width: 70%;
+            height: 40%;
+            transform: rotate(30deg);
+            background: linear-gradient(45deg, var(--accent-color), var(--accent-color-2));
+        }
+        
+        /* Reveal effect on scroll */
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .reveal-element.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Announcements Section */
+        #announcements {
+            padding: 100px 5%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .announcements-bg-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            opacity: 0.5;
+        }
+        
+        .section-header {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            font-size: 40px;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, var(--text-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 100%;
+            text-align: center;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-color);
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -10px;
+        }
+        
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .announcements-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .announcement-card {
+            background-color: rgba(13, 13, 26, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(20px);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .announcement-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .announcement-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(0, 255, 255, 0.3);
+        }
+        
+        .announcement-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            background: linear-gradient(45deg, 
+                var(--accent-color) 0%, 
+                transparent 20%, 
+                transparent 80%, 
+                var(--accent-color-2) 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .announcement-card:hover::before {
+            opacity: 0.5;
+            animation: border-flow 2s linear infinite;
+        }
+        
+        @keyframes border-flow {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 300% 0%; }
+        }
+        
+        .announcement-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 25px;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+        }
+        
+        .announcement-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-color);
+            transition: 0.3s;
+        }
+        
+        .announcement-card:hover .announcement-title {
+            color: var(--accent-color);
+            text-shadow: var(--neon-shadow);
+        }
+        
+        .announcement-date {
+            font-size: 14px;
+            color: var(--text-secondary);
+            background-color: rgba(0, 255, 255, 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .announcement-date i {
+            color: var(--accent-color);
+        }
+        
+        .announcement-content {
+            padding: 25px;
+            flex-grow: 1;
+        }
+        
+        .announcement-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+        
+        .announcement-cta {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .announcement-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .announcement-tag {
+            font-size: 12px;
+            color: var(--text-color);
+            background-color: rgba(123, 0, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+        
+        .announcement-tag:hover {
+            background-color: rgba(255, 0, 255, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .featured-announcement {
+            border: 1px solid rgba(255, 0, 255, 0.3);
+        }
+        
+        /* Supprimé car nous utilisons maintenant un style en ligne pour le tag */
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 60px;
+            gap: 10px;
+        }
+        
+        .pagination-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            background-color: transparent;
+            color: var(--text-color);
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .pagination-btn:hover, .pagination-btn.active {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            border-color: var(--accent-color);
+            box-shadow: var(--neon-shadow);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            padding: 30px 10%;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo span {
+            color: var(--accent-color);
+        }
+        
+        .footer-nav {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        
+        .footer-nav a:hover {
+            color: var(--accent-color);
+        }
+        
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        /* Scanline effect */
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.05;
+            background: linear-gradient(
+                to bottom,
+                transparent 50%,
+                rgba(0, 255, 255, 0.2) 50%
+            );
+            background-size: 100% 4px;
+            display: none;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .glitch-title {
+                font-size: 40px;
+            }
+            
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .announcement-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .announcement-date {
+                align-self: flex-start;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+            
+            .logo {
+                font-size: 22px;
+            }
+            
+            .menu-button {
+                display: block;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background: rgba(5, 5, 16, 0.95);
+                backdrop-filter: blur(20px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 999;
+                transition: 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+            }
+            
+            nav.active ul {
+                right: 0;
+            }
+            
+            nav ul li {
+                margin: 20px 0;
+            }
+            
+            nav ul li a {
+                font-size: 18px;
+                padding: 10px 0;
+            }
+            
+            .hero {
+                height: 50vh;
+            }
+            
+            .glitch-title {
+                font-size: 32px;
+            }
+            
+            .hero-description {
+                font-size: 16px;
+            }
+            
+            #announcements {
+                padding: 80px 20px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .announcement-cta {
+                flex-direction: column;
+            }
+            
+            .cta-button {
+                text-align: center;
+            }
+            
+            .footer-nav {
+                flex-wrap: wrap;
+                gap: 15px;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                height: 40vh;
+            }
+            
+            .glitch-title {
+                font-size: 28px;
+            }
+            
+            .hero-description {
+                font-size: 14px;
+            }
+            
+            .announcement-title {
+                font-size: 20px;
+            }
+            
+            .announcement-text {
+                font-size: 14px;
+            }
+            
+            .footer-logo {
+                font-size: 20px;
+            }
+            
+            .copyright {
+                font-size: 12px;
+            }
+            
+            .pagination {
+                gap: 5px;
+            }
+            
+            .pagination-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .announcement-date {
+                font-size: 12px;
+            }
+            
+            .announcement-tag {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Effet scanline subtil pour ambiance cyberpunk -->
+    <div class="scanline"></div>
+    
+    <!-- Simplified Preloader -->
+    <div class="preloader">
+        <div class="loader-progress"></div>
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <a href="index.html" class="logo">CRISTIAN<span>LAPUSAN</span></a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="index.html#about">À propos</a></li>
+                <li><a href="index.html#projects">Projets</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="menu-button">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-grid-overlay"></div>
+        <div class="hero-decor hero-decor-1"></div>
+        <div class="hero-decor hero-decor-2"></div>
+        <div class="hero-content">
+            <h3 class="reveal-element">Restez informé</h3>
+            <h1 class="glitch-title reveal-element">
+                Dernières <span>Annonces</span>
+            </h1>
+            <p class="hero-description reveal-element">Un espace dédié pour partager mes actualités et suivre mon parcours de développeur. Cette page est encore nouvelle mais contiendra bientôt toutes les informations importantes concernant mon activité et mes créations.</p>
+        </div>
+    </section>
+    
+    <!-- Announcements Section -->
+    <section id="announcements">
+        <div class="announcements-bg-grid"></div>
+        <div class="section-header">
+            <h2 class="section-title reveal-element">Actualités</h2>
+            <p class="section-subtitle reveal-element">Les dernières informations sur mes projets et mon activité</p>
+        </div>
+        
+        <div class="announcements-container">
+            <!-- First Announcement - English -->
+            <div class="announcement-card featured-announcement reveal-element">
+                <div class="announcement-header">
+                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                        <h3 class="announcement-title">Passage à l'anglais pour les futurs projets</h3>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <span style="background: linear-gradient(45deg, var(--accent-color-3), var(--accent-color)); color: var(--primary-color); font-size: 12px; padding: 5px 12px; border-radius: 20px; font-weight: 600; box-shadow: var(--neon-shadow);">Important</span>
+                            <div class="announcement-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>9 Avril 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="announcement-content">
+                    <p class="announcement-text">J'ai pris la décision d'internationaliser mon travail de développement web. Désormais, la majorité de mes nouveaux sites web seront développés en anglais afin de toucher un public plus large et international.</p>
+                    <p class="announcement-text">Ce changement me permettra de collaborer avec une communauté plus vaste et d'étendre la portée de mes projets au-delà des frontières francophones.</p>
+                    <div class="announcement-tags">
+                        <span class="announcement-tag">English</span>
+                        <span class="announcement-tag">International</span>
+                        <span class="announcement-tag">Stratégie</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Second Announcement - Page Creation -->
+            <div class="announcement-card reveal-element">
+                <div class="announcement-header">
+                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                        <h3 class="announcement-title">Création de la page d'annonces</h3>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <span style="background: linear-gradient(45deg, var(--accent-color), var(--accent-color-2)); color: var(--primary-color); font-size: 12px; padding: 5px 12px; border-radius: 20px; font-weight: 600; box-shadow: var(--neon-shadow-pink);">Nouveau</span>
+                            <div class="announcement-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>9 Avril 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="announcement-content">
+                    <p class="announcement-text">Je suis heureux de vous annoncer la création de cette nouvelle section d'annonces sur mon portfolio. Cet espace me permettra de partager avec vous mes actualités, l'avancement de mes projets et diverses informations sur mon parcours de développeur.</p>
+                    <p class="announcement-text">Restez à l'affût, de nouvelles annonces seront publiées prochainement !</p>
+                    <div class="announcement-cta">
+                        <a href="index.html" class="cta-button filled" data-text="Portfolio">Retour au portfolio</a>
+                    </div>
+                    <div class="announcement-tags">
+                        <span class="announcement-tag">Nouveauté</span>
+                        <span class="announcement-tag">Site Web</span>
+                        <span class="announcement-tag">Communication</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination">
+            <button class="pagination-btn active">1</button>
+            <button class="pagination-btn">2</button>
+            <button class="pagination-btn">3</button>
+            <button class="pagination-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Cristian<span>Lapusan</span></div>
+            
+            <div class="footer-nav">
+                <a href="index.html">Accueil</a>
+                <a href="index.html#about">À propos</a>
+                <a href="index.html#projects">Projets</a>
+                <a href="annonces.html">Annonces</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+            
+            <p class="copyright">&copy; 2025 CristianLapusan. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Preloader
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                const preloader = document.querySelector('.preloader');
+                if (preloader) {
+                    preloader.style.opacity = '0';
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                        initAnimations();
+                    }, 300);
+                }
+            }, 800);
+        });
+        
+        // Détection des appareils pour les effets avancés
+        function isHighPerformanceDevice() {
+            // Détection simplifiée basée sur le navigateur et la taille d'écran
+            const isDesktop = window.innerWidth >= 1024;
+            const isHighDPI = window.devicePixelRatio > 1;
+            
+            // Ne pas activer les effets avancés sur les appareils mobiles
+            if (navigator.userAgent.match(/Android|iPhone|iPad|iPod|Mobile/i)) {
+                return false;
+            }
+            
+            return isDesktop && isHighDPI;
+        }
+        
+        // Mobile menu
+        const menuButton = document.querySelector('.menu-button');
+        const navElement = document.querySelector('nav');
+        
+        if (menuButton) {
+            menuButton.addEventListener('click', () => {
+                menuButton.classList.toggle('active');
+                navElement.classList.toggle('active');
+            });
+            
+            // Close menu when clicking a link
+            const navLinks = document.querySelectorAll('nav ul li a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    menuButton.classList.remove('active');
+                    navElement.classList.remove('active');
+                });
+            });
+        }
+        
+        // Initialize animations
+        function initAnimations() {
+            // Activer l'effet scanline seulement sur les appareils puissants
+            if (isHighPerformanceDevice()) {
+                const scanline = document.querySelector('.scanline');
+                if (scanline) {
+                    scanline.style.display = 'block';
+                }
+            }
+            
+            // Animer les éléments reveal au chargement
+            const revealElements = document.querySelectorAll('.reveal-element');
+            revealElements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('revealed');
+                }, 300 + (index * 150));
+            });
+            
+            // Make all announcement cards visible
+            const allCards = document.querySelectorAll('.announcement-card');
+            allCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('visible');
+                }, 100 + (index * 100));
+            });
+            
+            // Reveal elements on scroll
+            function revealOnScroll() {
+                const revealElements = document.querySelectorAll('.reveal-element:not(.revealed)');
+                const windowHeight = window.innerHeight;
+                
+                revealElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - 100) {
+                        element.classList.add('revealed');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll(); // Initial check
+            
+            // Pagination functionality
+            const paginationButtons = document.querySelectorAll('.pagination-btn');
+            paginationButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    paginationButtons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Ici, vous pourriez implémenter la logique pour charger différentes annonces
+                    // Pour l'instant, c'est juste visuel
+                });
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const headerHeight = document.querySelector('header').offsetHeight;
+                        window.scrollTo({
+                            top: targetElement.offsetTop - headerHeight - 20,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
