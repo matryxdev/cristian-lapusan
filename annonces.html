@@ -575,37 +575,6 @@
             border: 1px solid rgba(255, 0, 255, 0.3);
         }
         
-        /* Supprimé car nous utilisons maintenant un style en ligne pour le tag */
-        
-        /* Pagination */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 60px;
-            gap: 10px;
-        }
-        
-        .pagination-btn {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            background-color: transparent;
-            color: var(--text-color);
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        
-        .pagination-btn:hover, .pagination-btn.active {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
-            border-color: var(--accent-color);
-            box-shadow: var(--neon-shadow);
-        }
-        
         /* Footer */
         footer {
             background-color: var(--primary-color);
@@ -795,16 +764,6 @@
             .copyright {
                 font-size: 12px;
             }
-            
-            .pagination {
-                gap: 5px;
-            }
-            
-            .pagination-btn {
-                width: 35px;
-                height: 35px;
-                font-size: 14px;
-            }
         }
         
         @media (max-width: 360px) {
@@ -869,7 +828,34 @@
         </div>
         
         <div class="announcements-container">
-                        <!-- New Announcement - Matryx Aviation -->
+                       <!-- New Announcement - Matryx Aviation -->
+            <div class="announcement-card featured-announcement reveal-element">
+                <div class="announcement-header">
+                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                        <h3 class="announcement-title">Le mois d'Avril s'annonce chargé</h3>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <span style="background: linear-gradient(45deg, #3498db, #2ecc71); color: var(--primary-color); font-size: 12px; padding: 5px 12px; border-radius: 20px; font-weight: 600; box-shadow: 0 0 10px rgba(52, 152, 219, 0.7);">À venir</span>
+                            <div class="announcement-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>11 Avril 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="announcement-content">
+                    <p class="announcement-text">Le mois d'avil sera chargé en termes de projets, plusieurs projets sur lesquels j'ai travaillé en même temps sont sur le point d'être aboutits</p>
+                    <p class="announcement-text">Voici quelques spoils des noms des projets qui arrivent : Matryx Crypt; Matryx Aviation | Airbus Edition; Matryx Aviation | Boeing Edition; Matryx ???? et d'autres ;)</p>
+
+                    <div class="announcement-tags">
+                        <span class="announcement-tag">Projets</span>
+                        <span class="announcement-tag">Avril</span>
+                        <span class="announcement-tag">Matryx</span>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <!-- New Announcement - Matryx Aviation -->
             <div class="announcement-card featured-announcement reveal-element">
                 <div class="announcement-header">
                     <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
@@ -887,6 +873,7 @@
                     <p class="announcement-text">Je suis ravi d'annoncer que mon projet "Matryx Aviation (Airbus Edition)" est sur le point d'être finalisé. Ce site web éducatif retrace toute l'histoire d'Airbus, depuis sa création jusqu'à ses dernières innovations.</p>
                     <p class="announcement-text">Les visiteurs pourront explorer une chronologie interactive des avions emblématiques, découvrir les avancées technologiques majeures et s'immerger dans l'univers passionnant de l'aviation commerciale européenne.</p>
                     <p class="announcement-text">Le site proposera également des informations détaillées sur chaque modèle d'avion, des fiches techniques, des galeries photos et des anecdotes sur l'histoire de cette entreprise aéronautique majeure.</p>
+
                     <div class="announcement-tags">
                         <span class="announcement-tag">Aviation</span>
                         <span class="announcement-tag">Airbus</span>
@@ -895,6 +882,7 @@
                     </div>
                 </div>
             </div>
+            
             <!-- First Announcement - English -->
             <div class="announcement-card featured-announcement reveal-element">
                 <div class="announcement-header">
@@ -945,17 +933,6 @@
                         <span class="announcement-tag">Site Web</span>
                         <span class="announcement-tag">Communication</span>
                     </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Pagination -->
-        <div class="pagination">
-            <button class="pagination-btn active">1</button>
-            <button class="pagination-btn">2</button>
-            <button class="pagination-btn">3</button>
-            <button class="pagination-btn"><i class="fas fa-chevron-right"></i></button>
-        </div>
                 </div>
             </div>
         </div>
@@ -1045,13 +1022,8 @@
                 }, 300 + (index * 150));
             });
             
-            // Make all announcement cards visible
-            const allCards = document.querySelectorAll('.announcement-card');
-            allCards.forEach((card, index) => {
-                setTimeout(() => {
-                    card.classList.add('visible');
-                }, 100 + (index * 100));
-            });
+            // Initialiser l'animation des cartes d'annonces
+            initCardAnimations();
             
             // Reveal elements on scroll
             function revealOnScroll() {
@@ -1068,18 +1040,6 @@
             
             window.addEventListener('scroll', revealOnScroll);
             revealOnScroll(); // Initial check
-            
-            // Pagination functionality
-            const paginationButtons = document.querySelectorAll('.pagination-btn');
-            paginationButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    paginationButtons.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Ici, vous pourriez implémenter la logique pour charger différentes annonces
-                    // Pour l'instant, c'est juste visuel
-                });
-            });
             
             // Smooth scrolling for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1098,6 +1058,17 @@
                         });
                     }
                 });
+            });
+        }
+
+        // Fonction pour initialiser les animations des cartes 
+        function initCardAnimations() {
+            const allCards = document.querySelectorAll('.announcement-card');
+            allCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('visible');
+                    card.classList.add('revealed');
+                }, 100 + (index * 100));
             });
         }
     </script>
